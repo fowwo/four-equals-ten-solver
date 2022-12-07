@@ -1,3 +1,9 @@
+/**
+ * Finds all solutions for the given numbers and allowed operations.
+ * @param {Number[]} numbers - An array containing four numbers.
+ * @param {String[]} operations - An array of valid operations. `[ "+", "-", "*", "/" ]` by default.
+ * @returns {String[]} An array of all expressions that evaluate to 10.
+ */
 function solve(numbers, operations = [ "+", "-", "*", "/" ]) {
 
 	function permutations(list) {
@@ -11,8 +17,8 @@ function solve(numbers, operations = [ "+", "-", "*", "/" ]) {
 				}
 			}
 			return list;
-		}
-	
+		};
+
 		let permutations = [[ list[0] ]];
 		for (var i = 1; i < list.length; i++) {
 			permutations = add(permutations, list[i]);
@@ -36,7 +42,7 @@ function solve(numbers, operations = [ "+", "-", "*", "/" ]) {
 		}
 		oPermutations = temp;
 	}
-	
+
 	// Expressions (without parentheses)
 	const iPermutations = [];
 	for (const nPerm of nPermutations) {
@@ -48,7 +54,7 @@ function solve(numbers, operations = [ "+", "-", "*", "/" ]) {
 			iPermutations.push(string);
 		}
 	}
-	
+
 	// Parentheses
 	const pPermutations = [];
 	for (const a of [ 0, 2, 4 ]) {
@@ -68,7 +74,7 @@ function solve(numbers, operations = [ "+", "-", "*", "/" ]) {
 			expressions.push(string);
 		}
 	}
-	
+
 	// Evaluate
 	return expressions.filter((expression) => eval(expression) === 10);
 }
