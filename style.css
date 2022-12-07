@@ -1,0 +1,73 @@
+html {
+	background: no-repeat fixed linear-gradient(#001830, #0af);
+	font-family: 'Ubuntu Mono', monospace;
+	color: white;
+	text-shadow: black 0px 2px 5px;
+}
+body {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	margin: 15px auto;
+	max-width: 750px;
+	height: 100vh;
+}
+input {
+	padding: 0;
+	width: 250px;
+	align-self: center;
+
+	font-family: 'Ubuntu Mono', monospace;
+	font-size: 100px;
+	text-align: center;
+
+	background-color: #0004;
+	color: #fffb;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 0px 0px 30px transparent;
+	
+	transition-property: background-color, color, box-shadow;
+	transition-duration: 100ms;
+}
+input:not(:focus):hover {
+	background-color: #0008;
+	color: white;
+}
+input:focus {
+	outline: none;
+	background-color: #000b;
+	color: white;
+	box-shadow: 0 0px 50px #fff2, inset 0 0 5px #0006;
+}
+input::placeholder { color: #fff1; }
+ul {
+	display: flex;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	flex-flow: wrap;
+	justify-content:center;
+}
+li {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	margin: 3px;
+	width: 175px;
+	height: 60px;
+
+	font-size: 32px;
+	text-align: center;
+
+	background-color: #0004;
+	color: white;
+	border-radius: 5px;
+}
+p {
+	margin: 10px;
+	text-align: center;
+	font-family: 'Patua One', cursive;
+	font-size: 24px;
+}
