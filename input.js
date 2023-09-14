@@ -68,7 +68,7 @@ function onOperationChange() {
  * @returns {Boolean} Whether or not the string consists of four digits.
  */
 function isFourDigits(string) {
-	return string.match(/^[0-9]{4}$/) !== null;
+	return /^[0-9]{4}$/.test(string);
 }
 
 /**
