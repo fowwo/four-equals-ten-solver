@@ -4,7 +4,7 @@
  * @param {String[]} operations - An array of valid operations. `[ "+", "-", "*", "/" ]` by default.
  * @returns {String[]} An array of all expressions that evaluate to 10.
  */
-export function solve(numbers, operations = [ "+", "-", "*", "/" ]) {
+export default function solve(numbers, operations = [ "+", "-", "*", "/" ]) {
 
 	function permutations(list) {
 		const add = (permutations, item) => {
@@ -77,33 +77,4 @@ export function solve(numbers, operations = [ "+", "-", "*", "/" ]) {
 
 	// Evaluate
 	return expressions.filter((expression) => eval(expression) === 10);
-}
-
-/**
- * Lists all solutions given a list of numbers and allowed operations.
- * @param {Number[]} numbers - An array containing four numbers
- * @param {String[]} operations - An array of valid operations.
- */
-export function listSolutions(numbers, operations = undefined) {
-	const solutions = solve(numbers, operations);
-	const message = document.querySelector("p");
-	const ul = document.querySelector("ul");
-	ul.innerHTML = "";
-	if (solutions.length) {
-		message.innerText = `${solutions.length} solution${solutions.length === 1 ? "" : "s"} found`;
-		message.style.color = "#8f8";
-		for (const solution of solutions) {
-			let string = "";
-			for (const c of solution.replace(/\*/g, "×").replace(/\//g, "÷")) {
-				const names = { "+": "addition", "-": "subtraction", "×": "multiplication", "÷": "division" };
-				string += c in names ? `<span class="operator" style="color:var(--${names[c]})">${c}</span>` : c;
-			}
-			const li = document.createElement("li");
-			li.innerHTML = string;
-			ul.appendChild(li);
-		}
-	} else {
-		message.innerText = "No solutions found";
-		message.style.color = "#f88";
-	}
 }

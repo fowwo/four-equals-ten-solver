@@ -1,4 +1,5 @@
-import { listSolutions } from "./solve.js";
+import solve from "./solve.js";
+import { listExpressions, setSolutionCount } from "./display.js";
 
 const numberInput = document.getElementById("number");
 const operatorInputs = document.getElementById("operations").children;
@@ -7,7 +8,9 @@ numberInput.onkeydown = handleInput;
 numberInput.onchange = () => {
 	if (isFourDigits(numberInput.value)) {
 		numberInput.setAttribute("data-value", numberInput.value);
-		listSolutions(numberInput.value, getOperations());
+		const solutions = solve(numberInput.value, getOperations());
+		listExpressions(solutions);
+		setSolutionCount(solutions.length);
 		numberInput.blur();
 	} else {
 		// Reset to the previous value if invalid.
@@ -17,8 +20,11 @@ numberInput.onchange = () => {
 
 for (const operator of operatorInputs) {
 	operator.onchange = () => {
-		const value = numberInput.value;
-		if (isFourDigits(value)) listSolutions(value, getOperations());
+		if (!isFourDigits(numberInput.value)) return;
+
+		const solutions = solve(numberInput.value, getOperations());
+		listExpressions(solutions);
+		setSolutionCount(solutions.length);
 	}
 }
 
