@@ -95,12 +95,8 @@ function listSolutions(numbers, operations = undefined) {
 		for (const solution of solutions) {
 			let string = "";
 			for (const c of solution.replace(/\*/g, "×").replace(/\//g, "÷")) {
-				const operator = "+-×÷".indexOf(c);
-				if (operator !== -1) {
-					string += `<span style="color:${[ "#bfb", "#fbb", "#bbf", "#fdb" ][operator]}">${c}</span>`;
-				} else {
-					string += c;
-				}
+				const names = { "+": "addition", "-": "subtraction", "×": "multiplication", "÷": "division" };
+				string += c in names ? `<span class="operator" style="color:var(--${names[c]})">${c}</span>` : c;
 			}
 			const li = document.createElement("li");
 			li.innerHTML = string;

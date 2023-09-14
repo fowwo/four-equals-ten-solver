@@ -11,7 +11,15 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<input type="text" placeholder="0000" maxlength="4" spellcheck="false" onkeydown="handleInput(event)" onchange="if (isFourDigits(this.value)) { listSolutions(this.value); this.blur(); }">
+	<div id="input">
+		<input id="number" type="text" placeholder="0000" maxlength="4" spellcheck="false" autocomplete="off" onkeydown="handleInput(event)" onchange="onNumberChange(this)">
+		<div id="operations">
+			<input id="addition" type="checkbox" class="operator" onchange="onOperationChange()" checked>
+			<input id="subtraction" type="checkbox" class="operator" onchange="onOperationChange()" checked>
+			<input id="multiplication" type="checkbox" class="operator" onchange="onOperationChange()" checked>
+			<input id="division" type="checkbox" class="operator" onchange="onOperationChange()" checked>
+		</div>
+	</div>
 	<p></p>
 	<ul></ul>
 	<script src="input.js"></script>
