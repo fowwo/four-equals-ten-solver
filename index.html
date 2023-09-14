@@ -9,20 +9,20 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Patua+One&family=Ubuntu+Mono:wght@700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="module" src="solve.js"></script>
+	<script type="module" src="input.js"></script>
 </head>
 <body>
 	<div id="input">
-		<input id="number" type="text" placeholder="0000" maxlength="4" spellcheck="false" autocomplete="off" onkeydown="handleInput(event)" onchange="onNumberChange(this)">
+		<input id="number" type="text" placeholder="0000" maxlength="4" spellcheck="false" autocomplete="off">
 		<div id="operations">
-			<input id="addition" type="checkbox" class="operator" onchange="onOperationChange()" checked>
-			<input id="subtraction" type="checkbox" class="operator" onchange="onOperationChange()" checked>
-			<input id="multiplication" type="checkbox" class="operator" onchange="onOperationChange()" checked>
-			<input id="division" type="checkbox" class="operator" onchange="onOperationChange()" checked>
+			<input id="addition" type="checkbox" class="operator" checked>
+			<input id="subtraction" type="checkbox" class="operator" checked>
+			<input id="multiplication" type="checkbox" class="operator" checked>
+			<input id="division" type="checkbox" class="operator" checked>
 		</div>
 	</div>
 	<p>Enter any four digits in the box above.</p>
 	<ul></ul>
-	<script src="input.js"></script>
-	<script src="solve.js"></script>
 </body>
 </html>

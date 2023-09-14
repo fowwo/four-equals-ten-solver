@@ -4,7 +4,7 @@
  * @param {String[]} operations - An array of valid operations. `[ "+", "-", "*", "/" ]` by default.
  * @returns {String[]} An array of all expressions that evaluate to 10.
  */
-function solve(numbers, operations = [ "+", "-", "*", "/" ]) {
+export function solve(numbers, operations = [ "+", "-", "*", "/" ]) {
 
 	function permutations(list) {
 		const add = (permutations, item) => {
@@ -84,7 +84,7 @@ function solve(numbers, operations = [ "+", "-", "*", "/" ]) {
  * @param {Number[]} numbers - An array containing four numbers
  * @param {String[]} operations - An array of valid operations.
  */
-function listSolutions(numbers, operations = undefined) {
+export function listSolutions(numbers, operations = undefined) {
 	const solutions = solve(numbers, operations);
 	const message = document.querySelector("p");
 	const ul = document.querySelector("ul");

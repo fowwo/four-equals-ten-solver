@@ -1,3 +1,27 @@
+import { listSolutions } from "./solve.js";
+
+const numberInput = document.getElementById("number");
+const operatorInputs = document.getElementById("operations").children;
+
+numberInput.onkeydown = handleInput;
+numberInput.onchange = () => {
+	if (isFourDigits(numberInput.value)) {
+		numberInput.setAttribute("data-value", numberInput.value);
+		listSolutions(numberInput.value, getOperations());
+		numberInput.blur();
+	} else {
+		// Reset to the previous value if invalid.
+		numberInput.value = numberInput.getAttribute("data-value");
+	}
+};
+
+for (const operator of operatorInputs) {
+	operator.onchange = () => {
+		const value = numberInput.value;
+		if (isFourDigits(value)) listSolutions(value, getOperations());
+	}
+}
+
 /**
  * Restricts the input to digits.
  * @param {KeyboardEvent} event - The keyboard event.
@@ -40,29 +64,6 @@ function inputFilter(event) {
 }
 
 /**
- * Handles the `onchange` event for the number input.
- * @param {HTMLInputElement} input - The input element.
- */
-function onNumberChange(input) {
-	if (isFourDigits(input.value)) {
-		input.setAttribute("data-value", input.value);
-		listSolutions(input.value, getOperations());
-		input.blur();
-	} else {
-		// Reset to the previous value if invalid.
-		input.value = input.getAttribute("data-value");
-	}
-}
-
-/**
- * Handles the `onchange` event for each operation input.
- */
-function onOperationChange() {
-	const value = document.getElementById("number").value;
-	if (isFourDigits(value)) listSolutions(value, getOperations());
-}
-
-/**
  * Checks if the given string consists of four digits.
  * @param {String} string - A string.
  * @returns {Boolean} Whether or not the string consists of four digits.
@@ -76,10 +77,11 @@ function isFourDigits(string) {
  * @returns {String[]} The selected operations.
  */
 function getOperations() {
+	const [ addition, subtraction, multiplication, division ] = operatorInputs;
 	return [
-		[ document.getElementById("addition"), "+" ],
-		[ document.getElementById("subtraction"), "-" ],
-		[ document.getElementById("multiplication"), "*" ],
-		[ document.getElementById("division"), "/" ]
+		[ addition, "+" ],
+		[ subtraction, "-" ],
+		[ multiplication, "*" ],
+		[ division, "/" ]
 	].filter(x => x[0].checked).map(x => x[1]);
 }
