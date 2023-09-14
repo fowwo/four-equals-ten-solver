@@ -1,8 +1,8 @@
 :root {
-	--addition: #bfb;
-	--subtraction: #fbb;
-	--multiplication: #bbf;
-	--division: #fdb;
+	--addition: #8f8;
+	--subtraction: #f88;
+	--multiplication: #88f;
+	--division: #fd8;
 }
 html {
 	background: no-repeat fixed linear-gradient(#001830, #0af);
