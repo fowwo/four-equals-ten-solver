@@ -8,12 +8,21 @@ export function listExpressions(expressions) {
 	if (expressions.length === 0) return;
 
 	for (const solution of expressions) {
+		const li = document.createElement("li");
 		let string = "";
 		for (const c of solution.replace(/\*/g, "×").replace(/\//g, "÷")) {
 			const names = { "+": "addition", "-": "subtraction", "×": "multiplication", "÷": "division" };
-			string += c in names ? `<span class="operator" style="color:var(--${names[c]})">${c}</span>` : c;
+			if (c in names) {
+				const span = document.createElement("span");
+				span.classList.add(names[c]);
+				span.style.color = `var(--${names[c]})`;
+				span.innerText = c;
+				string += span.outerHTML;
+				li.classList.add(names[c]);
+			} else {
+				string += c;
+			}
 		}
-		const li = document.createElement("li");
 		li.innerHTML = string;
 		ul.appendChild(li);
 	}

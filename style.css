@@ -109,6 +109,10 @@ input#addition::after { content: "+"; }
 input#subtraction::after { content: "-"; }
 input#multiplication::after { content: "×"; }
 input#division::after { content: "÷"; }
+div#input:has(input#addition:not(:checked)) ~ ul > li.addition { display: none; }
+div#input:has(input#subtraction:not(:checked)) ~ ul > li.subtraction { display: none; }
+div#input:has(input#multiplication:not(:checked)) ~ ul > li.multiplication { display: none; }
+div#input:has(input#division:not(:checked)) ~ ul > li.division { display: none; }
 .operator {
 	font-family: monospace;
 	font-weight: bold;

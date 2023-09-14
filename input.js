@@ -2,15 +2,15 @@ import solve from "./solve.js";
 import { listExpressions, setSolutionCount } from "./display.js";
 
 const numberInput = document.getElementById("number");
-const operatorInputs = document.getElementById("operations").children;
+const operatorInputs = [ ...document.getElementById("operations").children ];
 
 numberInput.onkeydown = handleInput;
 numberInput.onchange = () => {
 	if (isFourDigits(numberInput.value)) {
-		numberInput.setAttribute("data-value", numberInput.value);
-		const solutions = solve(numberInput.value, getOperations());
+		const solutions = solve(numberInput.value);
 		listExpressions(solutions);
 		setSolutionCount(solutions.length);
+		numberInput.setAttribute("data-value", numberInput.value);
 		numberInput.blur();
 	} else {
 		// Reset to the previous value if invalid.
@@ -20,11 +20,22 @@ numberInput.onchange = () => {
 
 for (const operator of operatorInputs) {
 	operator.onchange = () => {
-		if (!isFourDigits(numberInput.value)) return;
+		const solutions = document.querySelector("ul").children;
+		if (solutions.length === 0) return;
 
-		const solutions = solve(numberInput.value, getOperations());
-		listExpressions(solutions);
-		setSolutionCount(solutions.length);
+		const illegalOperations = operatorInputs.filter(x => !x.checked).map(x => x.id);
+		if (illegalOperations.length === 0) {
+			setSolutionCount(solutions.length);
+			return;
+		}
+
+		let count = 0;
+		for (const solution of solutions) {
+			if ([ ...solution.classList ].every(operation => !illegalOperations.includes(operation))) {
+				count++;
+			}
+		}
+		setSolutionCount(count);
 	}
 }
 
@@ -76,18 +87,4 @@ function inputFilter(event) {
  */
 function isFourDigits(string) {
 	return /^[0-9]{4}$/.test(string);
-}
-
-/**
- * Returns a list of all selected operations.
- * @returns {String[]} The selected operations.
- */
-function getOperations() {
-	const [ addition, subtraction, multiplication, division ] = operatorInputs;
-	return [
-		[ addition, "+" ],
-		[ subtraction, "-" ],
-		[ multiplication, "*" ],
-		[ division, "/" ]
-	].filter(x => x[0].checked).map(x => x[1]);
 }
