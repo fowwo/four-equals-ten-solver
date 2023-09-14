@@ -3,9 +3,13 @@
 	--subtraction: #f88;
 	--multiplication: #88f;
 	--division: #fd8;
+	--sky-top: #001830;
+	--sky-bottom: #0af;
+	--mountain-background: #1b405f;
+	--mountain-foreground: #020919;
 }
 html {
-	background: no-repeat fixed linear-gradient(#001830, #0af);
+	background: var(--sky-top) no-repeat fixed linear-gradient(var(--sky-top), var(--sky-bottom));
 	font-family: 'Ubuntu Mono', monospace;
 	color: white;
 	text-shadow: black 0px 2px 5px;
@@ -15,9 +19,11 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: 15px auto;
+	margin: 0 auto;
+	padding: 15px 0;
 	max-width: 750px;
-	height: 100vh;
+	min-height: 100vh;
+	overflow-y: scroll;
 }
 input {
 	margin: 0;
@@ -69,6 +75,17 @@ p {
 	text-align: center;
 	font-family: 'Patua One', cursive;
 	font-size: 24px;
+}
+svg {
+	position: fixed;
+	display: block;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+}
+svg#mountains {
+	height: 50%;
+	bottom: 0;
 }
 div#input {
 	max-width: 250px;
