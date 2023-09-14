@@ -1,15 +1,15 @@
 import solve from "./solve.js";
-import { listExpressions, setSolutionCount } from "./display.js";
+import { listExpressions, updateSolutionCount } from "./display.js";
 
 const numberInput = document.getElementById("number");
-const operatorInputs = [ ...document.getElementById("operations").children ];
+const operatorInputs = document.getElementById("operations").children;
 
 numberInput.onkeydown = handleInput;
 numberInput.onchange = () => {
 	if (isFourDigits(numberInput.value)) {
 		const solutions = solve(numberInput.value);
 		listExpressions(solutions);
-		setSolutionCount(solutions.length);
+		updateSolutionCount();
 		numberInput.setAttribute("data-value", numberInput.value);
 		numberInput.blur();
 	} else {
@@ -20,22 +20,8 @@ numberInput.onchange = () => {
 
 for (const operator of operatorInputs) {
 	operator.onchange = () => {
-		const solutions = document.querySelector("ul").children;
-		if (solutions.length === 0) return;
-
-		const illegalOperations = operatorInputs.filter(x => !x.checked).map(x => x.id);
-		if (illegalOperations.length === 0) {
-			setSolutionCount(solutions.length);
-			return;
-		}
-
-		let count = 0;
-		for (const solution of solutions) {
-			if ([ ...solution.classList ].every(operation => !illegalOperations.includes(operation))) {
-				count++;
-			}
-		}
-		setSolutionCount(count);
+		if (!numberInput.value) return;
+		updateSolutionCount();
 	}
 }
 

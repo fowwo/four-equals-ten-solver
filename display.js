@@ -29,16 +29,36 @@ export function listExpressions(expressions) {
 }
 
 /**
- * Displays the given number as the solution count.
- * @param {Number} x - The number to display.
+ * Displays the number of visible solutions.
  */
-export function setSolutionCount(x) {
+export function updateSolutionCount() {
 	const message = document.querySelector("p");
-	if (x > 0) {
-		message.innerText = `${x} solution${x === 1 ? "" : "s"} found`;
+	const count = countVisibleSolutions();
+	if (count > 0) {
+		message.innerText = `${count} solution${count === 1 ? "" : "s"} found`;
 		message.style.color = "#8f8";
 	} else {
 		message.innerText = "No solutions found";
 		message.style.color = "#f88";
 	}
+}
+
+/**
+ * Counts the number of visible solutions.
+ */
+function countVisibleSolutions() {
+	const solutions = document.querySelector("ul").children;
+	if (solutions.length === 0) return 0;
+
+	const operatorInputs = [ ...document.getElementById("operations").children ];
+	const illegalOperations = operatorInputs.filter(x => !x.checked).map(x => x.id);
+	if (illegalOperations.length === 0) return solutions.length;
+
+	let count = 0;
+	for (const solution of solutions) {
+		if ([ ...solution.classList ].every(operation => !illegalOperations.includes(operation))) {
+			count++;
+		}
+	}
+	return count;
 }
