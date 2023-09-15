@@ -76,5 +76,68 @@ export default function solve(numbers, operations = [ "+", "-", "*", "/" ]) {
 	}
 
 	// Evaluate
-	return expressions.filter((expression) => eval(expression) === 10);
+	return expressions.filter((expression) => {
+		const value = evaluate(expression);
+		if (!value) return false;
+		const [ a, b ] = value;
+		return a === b * 10;
+	});
+}
+
+/**
+ * Evaluates the given expression.
+ * @param {String} expression - The expression to evaluate.
+ * @returns {[ Number, Number ] | null} The numerator and denominator of the evaluation,
+ * or `null` if division by zero occurs.
+ */
+function evaluate(expression) {
+	let terms, operators;
+
+	// Evaluate parenthesis first (if any)
+	const x = expression.indexOf("(");
+	const y = expression.indexOf(")");
+	if (x !== y) {
+		const value = evaluate(expression.slice(x + 1, y));
+		if (!value) return null;
+
+		const left = expression.slice(0, x);
+		const right = expression.slice(y + 1);
+		const leftTerms = (left.match(/[0-9]+/g) ?? []).map(x => [ parseInt(x), 1 ]);
+		const leftOperators = left.match(/[\+\-\*\/]/g) ?? [];
+		const rightTerms = (right.match(/[0-9]+/g) ?? []).map(x => [ parseInt(x), 1 ]);
+		const rightOperators = right.match(/[\+\-\*\/]/g) ?? [];
+
+		terms = [ ...leftTerms, value, ...rightTerms ];
+		operators = leftOperators.concat(rightOperators);
+	} else {
+		terms = expression.match(/[0-9]+/g).map(x => [ parseInt(x), 1 ]);
+		operators = expression.match(/[\+\-\*\/]/g);
+	}
+
+	// Multiplication and division
+	for (let i = 0; i < operators.length; i++) {
+		let [ xa, xb ] = terms[i];
+		let [ ya, yb ] = terms[i + 1];
+		switch (operators[i]) {
+			case "/":
+				if (ya === 0) return null;
+				[ ya, yb ] = [ yb, ya ];
+			case "*":
+				terms[i] = [ xa * ya, xb * yb ];
+				terms.splice(i + 1, 1);
+				operators.splice(i, 1);
+				i--;
+		}
+	}
+
+	// Addition and subtraction
+	let [ a, b ] = terms[0];
+	for (const [ i, operator ] of operators.entries()) {
+		let [ x, y ] = terms[i + 1];
+		if (operator === "-") x *= -1;
+		a = a * y + b * x;
+		b *= y;
+	}
+
+	return [ a, b ];
 }
